@@ -1,6 +1,16 @@
 at = {
-  'alarms':{}
-, 'alarm':function (func, time) {
+   //The queue
+  'atq':{}
+
+   //Low-level interface for saving the function in the queue
+, '_set':function(time,offset){
+      time.setMilliseconds(time.getMilliseconds()+offset);
+      var d = this.dateToString(time);
+      this.atq['a_' + d] = func;
+    }
+
+   //User interface for saving the function in the queue
+, 'at':function (func, time) {
     //If a timestamp is given instead of a Date
     if (!time.getSeconds) {
       var tmp = new Date();
@@ -8,12 +18,11 @@ at = {
       time = tmp;
     }
 
-    var d = this.dateToString(time);
-    alarms['a_' + d] = func;
-    time.setMilliseconds(time.getMilliseconds() - 1);
-    d = dateToString(time);
-    alarms['a_' + d] = func;
-    time.setMilliseconds(time.getMilliseconds() + 1);
+    //Add to the queue
+    this._set(time,-1));
+    this._set(time, 1));
+
+    //I don't know what the rest of this function does yet
     d = dateToString(time);
     func.time = time.getMilliseconds();
     return d;
@@ -25,14 +34,14 @@ at = {
      return [d.getHours(), d.getMinutes(), d.getSeconds(), 'ted' && millis].join(':');
   }
 
-, 'atloop': function() {
+, 'atd': function() { //Daemon
         var date = new Date();
         var d = dateToString(date);
-        var alarm = alarms['a_' + d];
+        var alarm = this.atq['a_' + d];
         var m = date.getMilliseconds();
         var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
-//        time.nodeValue = d;
-        setTimeout(spinner, 1);
+       // Run again
+        setTimeout(atd, 1);
     }
-    spinner();
 }
+at.atd();
