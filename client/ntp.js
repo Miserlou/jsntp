@@ -83,9 +83,17 @@ ntp={
     this.socket.send(new Date().getTime());
   }
 
-, 'date':function(callback){
-    //Get the date of the server
-    return new Date();
+, 'date':function(clientDate){
+    /*
+       Get the date of the server that
+       corresponds to a client date.
+    */
+    if (!clientDate.getTime){
+      //Use now if no date is specified
+      clientDate=new Date();
+    }
+    clientDate.setTime(clientDate.getTime()+this.offset);
+    return clientDate;
   }
 
 } //End of the ntp json
