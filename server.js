@@ -1,6 +1,7 @@
 module.exports={
   'WEBDIR':'ntp'
-, 'SRVDIR': __dirname + '/../static' ;
+//, 'SRVDIR': __dirname + '/../static' ;
+, 'SRVDIR': '/home/tlevine/Documents/bar/node_modules/static' ;
 , 'JS':{
     'ntp.js':1
   , 'at.js':1
@@ -24,7 +25,7 @@ module.exports={
       if (clientPath[1]===this.WEBDIR){
         var JS=clientPath[2];
         if (JS in this.JS) {
-          var filePath = './'+this.SRVDIR+'/'+JS;
+          var filePath = this.SRVDIR+'/'+JS;
           this.fs.readFile(filePath, function(error, content) {
             if (error) {
               response.writeHead(500);
