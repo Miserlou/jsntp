@@ -83,4 +83,9 @@ ntp={
     this.socket.send(new Date().getTime());
   }
 
+, 'date':function(callback){
+    //Get the date of the server
+    return new Date();
+  }
+
 } //End of the ntp json
