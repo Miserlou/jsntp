@@ -1,7 +1,12 @@
 /*
    Demo of ntpjs and at.js: Server
 
-   Copyright 2011, Thomas Levine
+   By Thomas Levine
+
+   To the extent possible under law, Thomas Levine waives
+   all copyright and related or neighboring rights to the
+   demo of ntpjs and at.js in this file. This work is
+   published from the United States.
 */
 
 ntp=require('ntp');

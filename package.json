@@ -9,6 +9,12 @@
         "type": "git"
       , "url": "git://gitorious.org/tlevine/ntpjs.git"
     }
+  , "licenses": [
+     {
+       "type": "AGPL-3.0",
+       "url": "http://www.gnu.org/licenses/agpl.html",
+     }
+  ]
   , "dependencies": {
         "socket.io": "0.7.9"
     }

@@ -1,7 +1,12 @@
 <!--
    Demo of ntp.js and at.js: Client webpage
 
-   Copyright 2011, Thomas Levine
+   By Thomas Levine
+
+   To the extent possible under law, Thomas Levine waives
+   all copyright and related or neighboring rights to the
+   demo of ntpjs and at.js in this file. This work is
+   published from the United States.
 -->
 <!--Import-->
 <script language="javascript" src="/socket.io/socket.io.js"></script>
@@ -15,9 +20,9 @@
 <script>
 jQuery(document).ready(function(){
   ntp.sync(function(){
-    console.log('The time offset is '+ntp.offset);
+    alert('The time offset is '+ntp.offset);
     at.at(function(){
-      console.log('Yay! at.js works!');
+      alert('This will go off two seconds after the page syncs.');
     },ntp.date().getTime()+2000);
   });
 });
