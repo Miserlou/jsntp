@@ -11,8 +11,8 @@
     }
   , "licenses": [
      {
-       "type": "AGPL-3.0",
-       "url": "http://www.gnu.org/licenses/agpl.html",
+       "type": "AGPL-3.0"
+     , "url": "http://www.gnu.org/licenses/agpl.html"
      }
   ]
   , "dependencies": {
