@@ -1,5 +1,5 @@
 {
-    "name": "ntp.js"
+    "name": "ntp"
   , "version": "0.1"
   , "description": "Synchronize browser times with a server times through a protocol inspired by the Network Time Protocol"
   , "homepage": "http://thomaslevine.com"
@@ -12,6 +12,6 @@
   , "dependencies": {
         "socket.io": "0.7.9"
     }
-  , "main": "index"
+  , "main": "server"
   , "engines": { "node": ">= 0.4.0" }
 }
