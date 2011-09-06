@@ -15,4 +15,10 @@
 <script language="javascript" src="/ntp/at.js"></script>
 
 <!--Run it-->
-<script>jQuery(document).ready(sync());</script>
+<script>
+jQuery(document).ready(
+  ntp.sync(function(){
+      console.log(ntp.offset);
+  })
+);
+</script>
