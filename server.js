@@ -1,8 +1,10 @@
 ntp={
   'WEBDIR':'ntp'
 , 'SRVDIR':'client'
-, 'NTPJS':'ntp.js'
-, 'ATJS':'at.js'
+, 'JS':{
+    'ntp.js':1
+  , 'at.js':1
+  }
 
 , 'listen':function (app) {
     this.io = require('socket.io').listen(app);
@@ -21,7 +23,7 @@ ntp={
       var clientPath=request.url.split('/');
       if (clientPath[1]===this.WEBDIR){
         var JS=clientPath[2];
-        if (JS===this.NTPJS||JS===this.ATJS) {
+        if (JS in this.JS) {
           var filePath = './'+this.SRVDIR+'/'+JS;
           this.fs.readFile(filePath, function(error, content) {
             if (error) {
