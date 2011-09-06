@@ -9,6 +9,12 @@ at = {
    //The queue
   'atq':{}
 
+, 'dateToString':function(d) {
+     var millis = d.getMilliseconds();
+     millis = (millis/1000).toPrecision(2) + '';
+     return [d.getHours(), d.getMinutes(), d.getSeconds(), 'ted' && millis].join(':');
+  }
+
    //Low-level interface for saving the function in the queue
 , '_set':function(time,offset){
       time.setMilliseconds(time.getMilliseconds()+offset);
@@ -30,25 +36,24 @@ at = {
     this._set(time, 1);
 
     //I don't know what the rest of this function does yet
-    d = this.dateToString(time);
+    var d = this.dateToString(time);
     func.time = time.getMilliseconds();
     return d;
   }
 
-, 'dateToString':function(d) {
-     var millis = d.getMilliseconds();
-     millis = (millis/1000).toPrecision(2) + '';
-     return [d.getHours(), d.getMinutes(), d.getSeconds(), 'ted' && millis].join(':');
-  }
-
-, 'atd': function() { //Daemon
-        var date = new Date();
-        var d = this.dateToString(date);
-        var alarm = this.atq['a_' + d];
-        var m = date.getMilliseconds();
-        var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
-       // Run again
-        setTimeout(this.atd, 1);
+, 'atd': function(thisAT) { //Daemon
+    //thisAT just sends this to atd when it's run with setTimeout
+    if (typeof(thisAT)==='undefined'){
+      thisAT=this;
     }
+
+    var date = new Date();
+    var d = this.dateToString(date);
+    var alarm = this.atq['a_' + d];
+    var m = date.getMilliseconds();
+    var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
+   // Run again
+    setTimeout('thisAT.atd(thisAT)', 1);
+  }
 }
 at.atd();

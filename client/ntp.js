@@ -1,7 +1,8 @@
 function log(foo) {console.log(foo)}
 
 ntp={
-  'math':{
+  'offsets':new Array()
+, 'math':{
     /*
        Math for averaging
     */
@@ -32,17 +33,12 @@ ntp={
     }
   }
 
-, 'setup':function(callback,trips,burnin){
+, 'setup':function(trips,burnin){
     /*
        Prepare for syncing
     */
-
-    this.offsets=new Array();
     this.tripsSoFar=0;
 
-    if (typeof(callback)==='undefined'){
-      throw 'No callback to be run after syncing is defined.';
-    }
     //Defaults
     if (typeof(trips)==='undefined'){
       trips=100;
@@ -56,33 +52,37 @@ ntp={
     this.burnin=burnin;
 
     this.socket = io.connect();
-
     this.socket.on('connect', function(){
       //log('connected');
     });
 
+  }
+
+, 'sync':function(callback){
+    if (typeof(callback)==='undefined'){
+      throw 'No callback to be run after syncing is defined.';
+    }
+    this.setup();
+
+    var thisNTP=this;
     this.socket.on('message', function(times){
       clientReceive=new Date().getTime();
       server=parseInt(times.split(":")[0]);
       clientSend=parseInt(times.split(":")[1]);
       
       lastOffset=(clientReceive+clientSend)/2-server;
-      this.offsets.push(lastOffset);
+      thisNTP.offsets.push(lastOffset);
 
-      tripsSoFar++;
-      if (tripsSoFar < trips){
-        this.socket.send(new Date().getTime());
+      thisNTP.tripsSoFar++;
+      if (thisNTP.tripsSoFar < thisNTP.trips){
+        thisNTP.socket.send(new Date().getTime());
       } else {
         //Compute the offset
-        this.offset=mean(this.offsets.slice(burnin));
+        thisNTP.offset=thisNTP.math.mean(thisNTP.offsets.slice(thisNTP.burnin));
         callback();
       }
     });
-  }
-
-, 'sync':function(callback){
-    this.setup(callback);
     this.socket.send(new Date().getTime());
   }
 
-}
+} //End of the ntp json
