@@ -3,7 +3,9 @@
    Inspired by Network Time Protocol
 
    By Thomas Levine, standing on the substantial shoulders
-   of his group at the HTML5 Hackathon at Google Kirkland
+   of his group at the HTML5 Hackathon at Google Kirkland,
+   and inspired partly by Jehiah Czebotar's ntp-for-javascript
+   http://jehiah.cz/a/ntp-for-javascript
 
    ----
 
