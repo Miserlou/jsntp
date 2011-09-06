@@ -48,7 +48,7 @@ at = {
         var m = date.getMilliseconds();
         var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
        // Run again
-        setTimeout(atd, 1);
+        setTimeout(this.atd, 1);
     }
 }
 at.atd();
