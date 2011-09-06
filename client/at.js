@@ -30,7 +30,7 @@ at = {
     this._set(time, 1);
 
     //I don't know what the rest of this function does yet
-    d = dateToString(time);
+    d = this.dateToString(time);
     func.time = time.getMilliseconds();
     return d;
   }
@@ -43,7 +43,7 @@ at = {
 
 , 'atd': function() { //Daemon
         var date = new Date();
-        var d = dateToString(date);
+        var d = this.dateToString(date);
         var alarm = this.atq['a_' + d];
         var m = date.getMilliseconds();
         var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
