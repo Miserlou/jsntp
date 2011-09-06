@@ -1,7 +1,6 @@
 module.exports={
   'WEBDIR':'ntp'
-//, 'SRVDIR': __dirname + '/../static' ;
-, 'SRVDIR': '/home/tlevine/Documents/bar/node_modules/static' ;
+, 'SRVDIR': './node_modules/ntp/static'
 , 'JS':{
     'ntp.js':1
   , 'at.js':1
