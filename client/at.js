@@ -9,31 +9,37 @@ at = {
    //The queue
   'atq':{}
 
-, 'dateToString':function(d) {
-     var millis = d.getMilliseconds();
-     millis = (millis/1000).toPrecision(2) + '';
-     return [d.getHours(), d.getMinutes(), d.getSeconds(), 'ted' && millis].join(':');
+, 'dateToString':function(date) {
+    return date.getTime()+'';
   }
 
    //Low-level interface for saving the function in the queue
 , '_set':function(func,time,signedprecision){
-      time.setMilliseconds(time.getMilliseconds()+signedprecision);
+      time.setTime(time.getTime()+signedprecision);
       var d = this.dateToString(time);
-      this.atq['a_' + d] = func;
+      this.atq[d] = func;
     }
 
    //User interface for saving the function in the queue
-, 'at':function (func, time) {
+, 'at':function (func, time, precision) {
     //If a timestamp is given instead of a Date
     if (!time.getSeconds) {
       var tmp = new Date();
-      tmp.setMilliseconds(tmp.getMilliseconds() + time);
+      tmp.setTime(time);
       time = tmp;
+    }
+    if (typeof(precision)==='undefined'){
+      //How far away from the exact time is acceptable?
+      //Use a number in milliseconds
+      var precision=3;
     }
 
     //Add to the queue
-    this._set(func,time,-1);
-    this._set(func,time, 1);
+    var p=0-Math.abs(precision);
+    var p_end=Math.abs(precision);
+    for (p;p<=precision;p++){
+      this._set(func,time,p);
+    }
   }
 
 , 'atd': function(thisAT) { //Daemon
@@ -44,7 +50,7 @@ at = {
 
     var date = new Date();
     var d = thisAT.dateToString(date);
-    var alarm = thisAT.atq['a_' + d];
+    var alarm = thisAT.atq[d];
 
     if (alarm) {
       alarm();
