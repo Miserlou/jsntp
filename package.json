@@ -1,0 +1,17 @@
+{
+    "name": "ntp.js"
+  , "version": "0.1"
+  , "description": "Synchronize browser times with a server times through a protocol inspired by the Network Time Protocol"
+  , "homepage": "http://thomaslevine.com"
+  , "keywords": ["ntp","time","websocket", "socket", "socket.io"]
+  , "author": "Thomas Levine <tkl22@cornell.edu>"
+  , "repository":{
+        "type": "git"
+      , "url": "git://gitorious.org/tlevine/ntpjs.git"
+    }
+  , "dependencies": {
+        "socket.io": "0.7.9"
+    }
+  , "main": "index"
+  , "engines": { "node": ">= 0.4.0" }
+}

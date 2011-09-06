@@ -1,3 +1,10 @@
+/*
+   Schedule things to happen at certain times
+
+   By Thomas Levine, built on the substantial shoulders
+   of his group at the HTML5 Hackathon at Google Kirkland
+*/
+
 ntp={
   'offsets':new Array()
 , 'math':{
