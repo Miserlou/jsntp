@@ -20,9 +20,9 @@ ntp={
       //If the ntp directory is requested, do something
       var clientPath=request.url.split('/');
       if (clientPath[1]===this.WEBDIR){
-        JS=clientPath[3];
+        var JS=clientPath[2];
         if (JS===this.NTPJS||JS===this.ATJS) {
-          var filePath = this.SRVDIR+'/'+this.JS;
+          var filePath = './'+this.SRVDIR+'/'+JS;
           this.fs.readFile(filePath, function(error, content) {
             if (error) {
               response.writeHead(500);
