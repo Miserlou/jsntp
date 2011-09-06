@@ -1,43 +1,52 @@
-function ntplisten(app) {
-  var io = require('socket.io').listen(app)
-    , fs = require('fs')
-    , path = require('path')
+ntp={
+  'WEBDIR':'/ntp/'
+, 'SRVDIR':'client/'
+, 'CLIENT':'ntp.js'
 
-  var WEBDIR='/ntp/'
-    , SRVDIR='client/'
-    , CLIENT='ntp.js'
+, 'listen':function (app) {
+    this.io = require('socket.io').listen(app);
+    this.fs = require('fs');
+    this.path = require('path');
 
-  var ERROR='Welcome to NTP.js'
-
-  function handler (request,response) {
-    //If the ntp directory is requested, do something
-    if (request.url.split('/')[1]===DIR){
-      if (request.url===DIR+CLIENT) {
-        var filePath = SRVDIR+CLIENT;
-        fs.readFile(filePath, function(error, content) {
-  	if (error) {
-  	  response.writeHead(500);
-  	  response.end();
-  	} else {
-  	  response.writeHead(200, {'Content-Type':'text/javascript'});
-  	  response.end(content, 'utf-8');
-  	}
-        });
-      } else {
-        response.writeHead(500);
-        response.end(ERROR);
-      }
-    }
+    this.io.sockets.on('connection', function (socket) {
+      socket.on('message', function (clientTime) {
+        socket.send(new Date().getTime()+':'+clientTime);
+      });
+    });
   }
 
-  io.sockets.on('connection', function (socket) {
-    socket.on('message', function (clientTime) {
-      socket.send(new Date().getTime()+':'+clientTime);
-    });
-  });
+, 'client':function (request,response) {
+      //If the ntp directory is requested, do something
+      if (request.url.split('/')[1]===this.DIR){
+        if (request.url===this.WEBDIR+this.CLIENT) {
+          var filePath = this.SRVDIR+this.CLIENT;
+          fs.readFile(filePath, function(error, content) {
+    	if (error) {
+    	  response.writeHead(500);
+    	  response.end();
+    	} else {
+    	  response.writeHead(200, {'Content-Type':'text/javascript'});
+    	  response.end(content, 'utf-8');
+    	}
+          });
+        } else {
+          response.writeHead(500);
+          response.end('Welcome to ntp.js');
+        }
+      }
+    }
+
 }
 
 //Calling this library
+function handler (request,response) {
+  ntp.client(request,response)
+  /* Your code here
+     ...
+  */
+}
 var app = require('http').createServer(handler)
+
+var app = require('http').createServer(ntp.client) //If you're only synchronizing
 app.listen(8000);
-ntplisten(app)
+ntp.listen(app);
