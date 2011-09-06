@@ -8,7 +8,9 @@
 at = {
    //The queue
   'atq':{}
-
+, 'DEFAULTS':{
+    'PRECISION':8
+  }
 , 'dateToString':function(date) {
     return date.getTime()+'';
   }
@@ -31,7 +33,7 @@ at = {
     if (typeof(precision)==='undefined'){
       //How far away from the exact time is acceptable?
       //Use a number in milliseconds
-      var precision=3;
+      var precision=this.DEFAULTS.PRECISION;
     }
 
     //Add to the queue

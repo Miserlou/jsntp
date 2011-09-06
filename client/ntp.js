@@ -88,8 +88,9 @@ ntp={
        Get the date of the server that
        corresponds to a client date.
     */
-    if (!clientDate.getTime){
+    if (typeof(clientDate)==='undefined'){
       //Use now if no date is specified
+      console.log('no date');
       clientDate=new Date();
     }
     clientDate.setTime(clientDate.getTime()+this.offset);
