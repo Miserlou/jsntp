@@ -1,12 +1,5 @@
 function log(foo) {console.log(foo)}
 /*
-   Alarms, mostly Steve's work
-*/
-ntp={
-
-
-
-/*
    Math for averaging
 */
 
