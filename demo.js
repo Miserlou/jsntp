@@ -1,3 +1,9 @@
+/*
+   Demo of ntpjs and at.js: Server
+
+   Copyright 2011, Thomas Levine
+*/
+
 ntp=require('ntp');
 
 function handler (request,response) {
