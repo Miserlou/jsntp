@@ -16,8 +16,8 @@ at = {
   }
 
    //Low-level interface for saving the function in the queue
-, '_set':function(func,time,offset){
-      time.setMilliseconds(time.getMilliseconds()+offset);
+, '_set':function(func,time,signedprecision){
+      time.setMilliseconds(time.getMilliseconds()+signedprecision);
       var d = this.dateToString(time);
       this.atq['a_' + d] = func;
     }
@@ -34,11 +34,6 @@ at = {
     //Add to the queue
     this._set(func,time,-1);
     this._set(func,time, 1);
-
-    //I don't know what the rest of this function does yet
-    var d = this.dateToString(time);
-    func.time = time.getMilliseconds();
-    return d;
   }
 
 , 'atd': function(thisAT) { //Daemon
@@ -52,11 +47,8 @@ at = {
     var alarm = thisAT.atq['a_' + d];
 
     if (alarm) {
-      console.log('Yay! at.js works');
       alarm();
-    } /* else {
-      log('No alarm');
-    } */
+    }
 
     // Run again
     setTimeout(function(){
