@@ -1,6 +1,6 @@
 module.exports={
   'WEBDIR':'ntp'
-, 'SRVDIR':'client'
+, 'SRVDIR': __dirname + '/../static' ;
 , 'JS':{
     'ntp.js':1
   , 'at.js':1
@@ -18,7 +18,7 @@ module.exports={
     });
   }
 
-, 'client':function (request,response) {
+, 'static':function (request,response) {
       //If the ntp directory is requested, do something
       var clientPath=request.url.split('/');
       if (clientPath[1]===this.WEBDIR){
