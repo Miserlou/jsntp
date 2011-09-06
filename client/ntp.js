@@ -2,52 +2,7 @@ function log(foo) {console.log(foo)}
 /*
    Alarms, mostly Steve's work
 */
-window.alarms = {};
-function alarm(func, time) {
-if (!time.getSeconds) {
-    var tmp = new Date();
-    tmp.setMilliseconds(tmp.getMilliseconds() + time);
-    time = tmp;
-}
-var d = dateToString(time);
-alarms['a_' + d] = func;
-time.setMilliseconds(time.getMilliseconds() - 1);
-d = dateToString(time);
-alarms['a_' + d] = func;
-time.setMilliseconds(time.getMilliseconds() + 1);
-d = dateToString(time);
-/*alarms['a_' + d] = func;
-time.setMilliseconds(time.getMilliseconds() + 2);
-d = dateToString(time);
-alarms['a_' + d] = func;*/
-func.time = time.getMilliseconds();
-return d;
-}
-var time = document.getElementById('time').firstChild;
-function dateToString(d) {
-var millis = d.getMilliseconds();
-millis = (millis/1000).toPrecision(2) + '';
-/*if (millis.length < 2) {
-    millis = '00' + millis;
-} else if (millis.length < 3) {
-    millis = '0' + millis;
-} else if (millis.length < 4) {
-    millis = '0' + millis;
-}*/
-return [d.getHours(), d.getMinutes(), d.getSeconds(), 'ted' && millis].join(':');
-}
-function spinner() {
-var date = new Date();
-var d = dateToString(date);
-var alarm = alarms['a_' + d];
-var m = date.getMilliseconds();
-var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
-//        time.nodeValue = d;
-setTimeout(spinner, 1);
-}
-spinner();
-//    alarm(function() {updateTime(1) }, 3*1000);
-
+ntp={
 
 
 
