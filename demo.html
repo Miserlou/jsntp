@@ -16,9 +16,12 @@
 
 <!--Run it-->
 <script>
-jQuery(document).ready(
+jQuery(document).ready(function(){
   ntp.sync(function(){
-      console.log(ntp.offset);
-  })
-);
+    console.log('The time offset is '+ntp.offset);
+  });
+  at.at(function(){
+    console.log('Yay! at.js works!');
+  },new Date().getTime()+2000);
+});
 </script>

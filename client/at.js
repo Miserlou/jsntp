@@ -63,6 +63,3 @@ at = {
   }
 }
 at.atd();
-at.at(function(){
-  console.log('Yay! at.js works');
-},new Date().getTime()+2000);

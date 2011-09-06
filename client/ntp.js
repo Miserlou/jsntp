@@ -1,5 +1,3 @@
-function log(foo) {console.log(foo)}
-
 ntp={
   'offsets':new Array()
 , 'math':{
