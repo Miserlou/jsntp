@@ -1,34 +1,36 @@
 function log(foo) {console.log(foo)}
-/*
-   Math for averaging
-*/
 
-function compare(a,b){
-	return a-b;
-}
-
-function median(list){
-	list.sort(compare);
-	var listlength = list.length;
-	if (listlength % 2){
-		var odd = (listlength / 2 - .5);
-		return list[odd];
-	}else{
-		var even = (list[listlength / 2]);
-		even += (list[listlength  / 2 + 1]);
-		even = (even / 2);
-		return even;
-	}
-}
-
-function mean(list){
-	var average = 0;
-	var i=0;
-	for (i=0; i < list.length;i++){
-		average += list[i];
-	}
-	average = Math.round(average / i);
-	return average
+ntp={
+  'math':{
+    /*
+       Math for averaging
+    */
+    'median':function(list){
+      function compare(a,b){
+        return a-b;
+      }
+      list.sort(compare);
+      var listlength = list.length;
+      if (listlength % 2){
+        var odd = (listlength / 2 - .5);
+        return list[odd];
+      }else{
+        var even = (list[listlength / 2]);
+        even += (list[listlength  / 2 + 1]);
+        even = (even / 2);
+        return even;
+      }
+    }
+  , 'mean':function(list){
+      var average = 0;
+      var i=0;
+      for (i=0; i < list.length;i++){
+        average += list[i];
+      }
+      average = Math.round(average / i);
+      return average
+    }
+  }
 }
 
 
