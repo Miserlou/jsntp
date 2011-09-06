@@ -26,8 +26,8 @@ at = {
     }
 
     //Add to the queue
-    this._set(time,-1));
-    this._set(time, 1));
+    this._set(time,-1);
+    this._set(time, 1);
 
     //I don't know what the rest of this function does yet
     d = dateToString(time);
