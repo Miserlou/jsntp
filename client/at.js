@@ -16,7 +16,7 @@ at = {
   }
 
    //Low-level interface for saving the function in the queue
-, '_set':function(time,offset){
+, '_set':function(func,time,offset){
       time.setMilliseconds(time.getMilliseconds()+offset);
       var d = this.dateToString(time);
       this.atq['a_' + d] = func;
@@ -32,8 +32,8 @@ at = {
     }
 
     //Add to the queue
-    this._set(time,-1);
-    this._set(time, 1);
+    this._set(func,time,-1);
+    this._set(func,time, 1);
 
     //I don't know what the rest of this function does yet
     var d = this.dateToString(time);
@@ -44,16 +44,27 @@ at = {
 , 'atd': function(thisAT) { //Daemon
     //thisAT just sends this to atd when it's run with setTimeout
     if (typeof(thisAT)==='undefined'){
-      thisAT=this;
+      var thisAT=this;
     }
 
     var date = new Date();
-    var d = this.dateToString(date);
-    var alarm = this.atq['a_' + d];
-    var m = date.getMilliseconds();
-    var fire = alarm && (alarm() || (time.nodeValue = [m, alarm.time, m - alarm.time].join(' | ')));
-   // Run again
-    setTimeout('thisAT.atd(thisAT)', 1);
+    var d = thisAT.dateToString(date);
+    var alarm = thisAT.atq['a_' + d];
+
+    if (alarm) {
+      console.log('Yay! at.js works');
+      alarm();
+    } /* else {
+      log('No alarm');
+    } */
+
+    // Run again
+    setTimeout(function(){
+      thisAT.atd(thisAT);
+    },1);
   }
 }
 at.atd();
+at.at(function(){
+  console.log('Yay! at.js works');
+},new Date().getTime()+2000);
