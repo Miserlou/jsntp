@@ -208,10 +208,10 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: Thomas Levine
    ========================================================================== */
 
-
+#main{ width:800px; background-color:black; float:left; margin:0 auto;}
 
 
 
