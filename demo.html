@@ -13,17 +13,15 @@
 <script language="javascript" src="/ntp/ntp.js"></script>
 <script language="javascript" src="/ntp/at.js"></script>
 
-<!--jQuery (not required)-->
-<script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-
 <!--Run it-->
 <script>
-jQuery(document).ready(function(){
-  ntp.sync(function(){
-    alert('The time offset is '+ntp.offset);
-    at.at(function(){
-      alert('This will go off two seconds after the page syncs.');
-    },ntp.date().getTime()+2000);
-  });
+ntp.sync(function(){
+  alert(
+    'Your clock differs from the server\'s'
+  + ' by '+(ntp.offset/1000)
+  );
+  at.at(function(){
+    alert('Happy New Year!');
+  },ntp.date(1325376000000));
 });
 </script>

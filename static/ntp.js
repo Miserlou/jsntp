@@ -120,8 +120,11 @@ ntp={
     */
     if (typeof(clientDate)==='undefined'){
       //Use now if no date is specified
-      console.log('no date');
       clientDate=new Date();
+    } else if (typeof(clientDate)==='number'){
+      tmp=new Date();
+      tmp.setTime(clientDate);
+      clientDate=tmp;
     }
     clientDate.setTime(clientDate.getTime()+this.offset);
     return clientDate;

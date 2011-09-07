@@ -211,7 +211,9 @@ td { vertical-align: top; }
    Author: Thomas Levine
    ========================================================================== */
 
-#main{ width:800px; background-color:black; float:left; margin:0 auto;}
+body { background-color: grey; }
+#main { width: 460px; padding: 1em 40px; background-color: white; margin: 0 auto;}
+header {text-align: center; color: white; font-size: 3em; }
 
 
 
