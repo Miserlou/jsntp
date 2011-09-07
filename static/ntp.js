@@ -126,7 +126,7 @@ ntp={
       tmp.setTime(clientDate);
       clientDate=tmp;
     }
-    clientDate.setTime(clientDate.getTime()+this.offset);
+    clientDate.setTime(clientDate.getTime()-this.offset);
     return clientDate;
   }
 
