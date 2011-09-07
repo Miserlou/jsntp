@@ -46,7 +46,7 @@ module.exports={
     });
   }
 
-, 'static':function (request,response) {
+, 'static':function (request,response,yourstuff) {
       //If the ntp directory is requested, do something
       var clientPath=request.url.split('/');
       if (clientPath[1]===this.WEBDIR){
@@ -66,6 +66,9 @@ module.exports={
           response.writeHead(500);
           response.end('Welcome to ntp.js');
         }
+      } else {
+        //This is a hack because I don't know the right way to do it.
+        yourstuff(request,response);
       }
     }
 
