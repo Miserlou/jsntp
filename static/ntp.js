@@ -86,11 +86,11 @@ ntp={
 
   }
 
-, 'sync':function(callback){
+, 'sync':function(callback,trips,burnin){
     if (typeof(callback)==='undefined'){
       throw 'No callback to be run after syncing is defined.';
     }
-    this.setup();
+    this.setup(trips,burnin);
 
     var thisNTP=this;
     this.socket.on('message', function(times){
