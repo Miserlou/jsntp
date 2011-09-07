@@ -49,21 +49,27 @@
         for the browser in pure Javascript.
       </p>
 
+      <h1>Demo</h1>
+      <div id="demo">Some sort of demo. Maybe just a clock.</div>
+
       <h1>How</h1>
-      <div id="demos">
-        <div id="server_demo" class="demo">
+      <div id="codez">
+        <div id="server_code" class="code">
           <h2>Server</h2>
           <pre>
             Code here
           </pre>
         </div>
-        <div id="server_demo" class="demo">
+        <div id="server_code" class="code">
           <h2>Client</h2>
           <pre>
             Code here
           </pre>
         </div>
-      </div><!--End #demos-->
+      </div><!--End #codez-->
+
+      <h1>Install</h1>
+      <pre>npm install ntp</pre>
     </div><!--End #main-->
 
     <footer>
@@ -72,17 +78,25 @@
 
 
   <!-- JavaScript at the bottom for fast page loading -->
-
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
-
-
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/plugins.js"></script>
-  <script defer src="js/script.js"></script>
+  <!--ntp.js-->
+  <script language="javascript" src="/socket.io/socket.io.js"></script>
+  <script language="javascript" src="/ntp/ntp.js"></script>
+  <script language="javascript" src="/ntp/at.js"></script>
+ 
+  <!--jQuery-->
+  <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <!--Run it-->
+  <script>
+  jQuery(document).ready(function(){
+    ntp.sync(function(){
+      alert('The time offset is '+ntp.offset);
+      at.at(function(){
+        alert('This will go off two seconds after the page syncs.');
+      },ntp.date().getTime()+2000);
+    });
+  });
+  </script>
   <!-- end scripts-->
-
 	
   <!-- Change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -96,7 +110,7 @@
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7 ]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
   
