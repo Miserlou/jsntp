@@ -24,6 +24,9 @@
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
   <link rel="stylesheet" href="css/style.css">
+  <!--SyntaxHighlighter-->
+  <link href="css/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
+  <link href="css/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -52,17 +55,37 @@
       <h2>Demo</h1>
       <div id="demo">Some sort of demo. Maybe just a clock.</div>
 
-      <h2>How</h1>
+      <h2>Howto</h1>
       <div id="codez">
+        <div id="client_code" class="code">
+          <h3>Client</h2>
+<pre class="brush: xml">
+&lt;script src="/socket.io/socket.io.js">&lt;/script>
+&lt;script src="/ntp/ntp.js">&lt;/script>
+&lt;script src="/ntp/at.js">&lt;/script>
+&lt;script>
+ntp.sync(function(){
+  alert(
+    'Your clock differs from the server\'s'
+  + ' by '+(ntp.offset/1000)
+  );
+  at.at(function(){
+    alert('Happy New Year!');
+  },ntp.date(1325376000000));
+});
+&lt;/script>
+</pre>
+        </div>
         <div id="server_code" class="code">
           <h3>Server</h2>
-<pre>
+<pre class="brush: js">
 ntp=require('ntp');
 
 function handler (request,response) {
   ntp.static(request,response)
 
-  /* Your code goes below
+  /*
+     Your code goes below
      In this case, we're just loading the demo.
   */
   require('fs').readFile('demo.html',
@@ -77,17 +100,10 @@ function handler (request,response) {
         response.end(content, 'utf-8');
       }
     });
-  /* End of your code
-     ...
+  /*
+     End of your code
   */
 }
-</pre>
-        </div>
-        <div id="server_code" class="code">
-          <h3>Client</h2>
-<pre>
-<script language="javascript" src="/socket.io/socket.io.js"></script>
-<script language="javascript" src="/ntp/ntp.js"></script>
 </pre>
         </div>
       </div><!--End #codez-->
@@ -102,11 +118,18 @@ function handler (request,response) {
 
 
   <!-- JavaScript at the bottom for fast page loading -->
+  <!--SyntaxHighlighter-->
+  <script type="text/javascript" src="js/libs/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="js/libs/syntaxhighlighter/shBrushJScript.js"></script>
+  <script type="text/javascript" src="js/libs/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all()</script>
+
   <!--jsntp-->
   <script language="javascript" src="/socket.io/socket.io.js"></script>
   <script language="javascript" src="/ntp/ntp.js"></script>
   <script language="javascript" src="/ntp/at.js"></script>
  
+
   <!--jQuery-->
   <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <!--Run it-->
