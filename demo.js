@@ -10,6 +10,9 @@
 */
 
 ntp=require('ntp');
+var app = require('http').createServer(handler) 
+app.listen(8000);
+ntp.listen(app);
 
 function handler (request,response) {
   //Listen for the call to the ntp javascript
@@ -33,7 +36,3 @@ function handler (request,response) {
 }
 //If you're not serving anything of your own on this server, you can do
 //var app = require('http').createServer(ntp.static)
-
-var app = require('http').createServer(handler) 
-app.listen(8000);
-ntp.listen(app);
