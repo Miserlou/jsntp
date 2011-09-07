@@ -11,16 +11,13 @@
 
 ntp=require('ntp');
 var app = require('http').createServer(handler) 
+function handler(request,response){
+  ntp.static(request,response,servepage);
+};
 app.listen(8000);
 ntp.listen(app);
 
-function handler (request,response) {
-  //Listen for the call to the ntp javascript
-  ntp.static(request,response)
-
-  /* Your code goes here
-     In this case, we're just loading the demo.
-  */
+function servepage (request,response) {
   require('fs').readFile('demo.html', function(error, content) {
     if (error) {
       response.writeHead(500);
@@ -30,9 +27,4 @@ function handler (request,response) {
       response.end(content, 'utf-8');
     }
   });
-  /* End of your code
-     ...
-  */
 }
-//If you're not serving anything of your own on this server, you can do
-//var app = require('http').createServer(ntp.static)
