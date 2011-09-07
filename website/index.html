@@ -24,9 +24,6 @@
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
   <link rel="stylesheet" href="css/style.css">
-  <!--SyntaxHighlighter-->
-  <link href="css/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
-  <link href="css/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -51,10 +48,16 @@
         it's <a href="http://www.ntp.org">Network Time Protocol</a>
         for the browser in pure Javascript. An example:
       </p>
+
       <div id="demo">
         <div id="error">The demo requires Javascript</div>
         <div id="clock">Synchronizing...</div>
       </div>
+
+      <p>
+        It comes with <a href="/ntp/at.js">at.js</a>, which lets
+        you schedule tasks to happen at certain times.
+      </p>
 
       <h2>Howto</h2>
       <div id="codez">
@@ -68,7 +71,7 @@
 ntp.sync(function(){
   alert(
     'Your clock differs from the server\'s'
-  + ' by '+(ntp.offset/1000)
+  + ' by '+(ntp.offset/1000)+' seconds.'
   );
   at.at(function(){
     alert('Happy New Year!');
@@ -102,20 +105,30 @@ function handler (request,response) {
 
 
   <!-- JavaScript at the bottom for fast page loading -->
+
+  <!--jQuery-->
+  <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
   <!--SyntaxHighlighter-->
+  <!--CSS at the end because we don't need it until we run the scripts-->
+  <link href="css/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
+  <link href="css/syntaxhighlighter/shThemeEclipse.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="js/libs/syntaxhighlighter/shCore.js"></script>
   <script type="text/javascript" src="js/libs/syntaxhighlighter/shBrushXml.js"></script>
   <script type="text/javascript" src="js/libs/syntaxhighlighter/shBrushJScript.js"></script>
   <script type="text/javascript" src="js/libs/syntaxhighlighter/shBrushPlain.js"></script>
-  <script type="text/javascript">SyntaxHighlighter.all()</script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    SyntaxHighlighter.all();
+    $('.syntaxhighlighter').css('overflow','visible');
+  });
+  </script>
 
   <!--jsntp-->
   <script language="javascript" src="/socket.io/socket.io.js"></script>
   <script language="javascript" src="/ntp/ntp.js"></script>
   <script language="javascript" src="/ntp/at.js"></script>
-
-  <!--jQuery-->
-  <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
   <!--Demo-->
   <script language="javascript" src="js/libs/jqclock_201.js"></script>

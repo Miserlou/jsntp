@@ -212,14 +212,13 @@ td { vertical-align: top; }
    ========================================================================== */
 
 body { background-color: grey; }
-#main { width: 460px; padding: 1em 40px; background-color: white; margin: 0 auto;}
-header {color: white; font-size: 3em; }
-
-header { text-align: center;}
+#main { width: 560px; padding: 1em 40px; background-color: white; margin: 0 auto 4em auto;}
+header { text-align: center; color: white; font-size: 3em; }
+h3 {color: grey;}
 
 /* Clock */
 .js #demo #error {display:none;}
-.jqclock { text-align:center; color: black; width: 100%; margin:0 auto; }
+.jqclock { text-align:center; color: grey; width: 100%; margin:0 auto; }
 .clockdate { display: none;}
 .clocktime { font-size: 3em; font-weight: bold; display: block;}
 
