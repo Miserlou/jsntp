@@ -86,7 +86,8 @@ module.exports={
     var SyncStats = mongoose.model('SyncStats', SyncStatsSchema);
 
     //Read data
-    var this_sync = new SyncStats();
+    console.log(request);
+    var this_sync = new SyncStats(request);
   }
 
 }
