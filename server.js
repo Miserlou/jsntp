@@ -72,5 +72,22 @@ module.exports={
       }
     }
 
+,'save_stats':function(request,response){
+    //Define models and connect
+    var mongoose = require('mongoose');
+    mongoose.connect('mongodb://localhost/papio'); 
+    var Schema = mongoose.Schema
+    var SyncStatsSchema = new Schema({
+        'clientSend':Date
+      , 'server':Date
+      , 'clientReceive':Date
+      , 'clientId':String
+    });
+    var SyncStats = mongoose.model('SyncStats', SyncStatsSchema);
+
+    //Read data
+    var this_sync = new SyncStats();
+  }
+
 }
 
