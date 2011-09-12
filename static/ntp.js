@@ -30,6 +30,7 @@
 
 ntp={
   'offsets':new Array()
+, 'roundtrips':new Array()
 , 'math':{
     /*
        Math for averaging
@@ -86,7 +87,7 @@ ntp={
 
   }
 
-, 'sync':function(callback){
+, 'sync':function(callback,get_client_id){
     if (typeof(callback)==='undefined'){
       throw 'No callback to be run after syncing is defined.';
     }
@@ -101,6 +102,13 @@ ntp={
       lastOffset=(clientReceive+clientSend)/2-server;
       thisNTP.offsets.push(lastOffset);
 
+      thisNTP.roundtrips.push({
+        'clientSend':clientSend
+      , 'server':server
+      , 'clientReceive':clientSend
+      , 'clientId':get_client_id()
+      });
+
       thisNTP.tripsSoFar++;
       if (thisNTP.tripsSoFar < thisNTP.trips){
         thisNTP.socket.send(new Date().getTime());
@@ -108,6 +116,15 @@ ntp={
         //Compute the offset
         thisNTP.offset=thisNTP.math.mean(thisNTP.offsets.slice(thisNTP.burnin));
         callback();
+
+        //Send statistics to the server
+        $.post({
+          url: "/stats"
+        , data: thisNTP.roundtrips
+        , success: function(){
+            $(this)
+          }
+        });
       }
     });
     this.socket.send(new Date().getTime());
