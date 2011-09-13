@@ -152,9 +152,12 @@ ntp={
     var order=[]
     var i=0;
     for (i=0;i<array.length;i++){
-      id[i]=i;
+      order[i]=i;
     }
-    return order.sort(function(a,b) {(order.indexOf(a.name) < order.indexOf(b.name) ? -1 : 1);});
+    return order.sort(function(a,b) {(order.indexOf(a.name) > order.indexOf(b.name) ? -1 : 1);});
+  }
+, 'best':function(trips){
+    return this.roundtrips[this.order(trips.map(this.stats.delay))[0]];
   }
 , 'stats':{
     //Round-trip length
