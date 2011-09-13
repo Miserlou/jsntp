@@ -91,7 +91,7 @@ ntp={
     if (typeof(callback)==='undefined'){
       throw 'No callback to be run after syncing is defined.';
     }
-    this.setup(trips,burnin);
+    this.setup();
 
     var thisNTP=this;
     this.socket.on('message', function(times){
@@ -105,8 +105,8 @@ ntp={
       thisNTP.roundtrips.push({
         'clientSend':clientSend
       , 'server':server
-      , 'clientReceive':clientSend
-      , 'clientId':get_client_id()
+      , 'clientReceive':clientReceive
+//      , 'clientId':get_client_id()
       });
 
       thisNTP.tripsSoFar++;
@@ -116,15 +116,12 @@ ntp={
         //Compute the offset
         thisNTP.offset=thisNTP.math.mean(thisNTP.offsets.slice(thisNTP.burnin));
         callback();
-
+/*
         //Send statistics to the server
-        $.post({
-          url: "/stats"
-        , data: thisNTP.roundtrips
-        , success: function(){
-            $(this)
-          }
+        $.post("/stats",thisNTP.roundtrips,function(){
+          console.log($(this))
         });
+*/
       }
     });
     this.socket.send(new Date().getTime());
@@ -145,6 +142,47 @@ ntp={
     }
     clientDate.setTime(clientDate.getTime()-this.offset);
     return clientDate;
+  }
+
+, 'sort':function(trips,attr){
+    var list=new Array();
+    var i=0;
+    for (i=0; (trips.length-1); i++ ){
+      list.push(
+    }
+    return trips.sort(function(a,b) {
+      return a - b;
+    });
+}
+
+, 'stats':{
+    'map':function(listin,fun) { 
+      var listout=new Array();
+      var i=0;
+      for (i=0; (listin.length-1); i++ ){
+        var out=fun(listin[i]);
+        if (typeof(out)!='undefined'){
+          listout.push(out);
+        }
+      }
+      return listout;
+    }
+
+    //Round-trip length
+  , 'delay':function(trip) {
+      return (trip.clientReceive-trip.clientSend);
+    }
+  , 'offset':function(trip){
+      return (trip.clientReceive+trip.clientSend)/2-trip.server;
+    }
+
+  , 'all':function(trips) {
+      console.log('delay,offset');
+      var _this=this;
+      _this.map(trips, function(trip) {
+        console.log(_this.delay(trip)+','+_this.offset(trip));
+      });
+    }
   }
 
 } //End of the ntp json
