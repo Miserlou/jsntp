@@ -35,11 +35,11 @@ ntp={
     /*
        Math for averaging
     */
-    'median':function(list){
-      function compare(a,b){
+    'compare':function(a,b){
         return a-b;
       }
-      list.sort(compare);
+  , 'median':function(list){
+      list.sort(this.compare);
       var listlength = list.length;
       if (listlength % 2){
         var odd = (listlength / 2 - .5);
@@ -59,6 +59,11 @@ ntp={
       }
       average = Math.round(average / i);
       return average
+    }
+  , 'sort':function(list){
+      return list.sort(function(a,b) {
+        return a - b;
+      });
     }
   }
 
@@ -143,20 +148,13 @@ ntp={
     clientDate.setTime(clientDate.getTime()-this.offset);
     return clientDate;
   }
-/*
-, 'sort':function(list){
-    return list.sort(function(a,b) {
-      return a - b;
-    });
-  }
-*/
-, 'map':function(listin,fun){
-    var listout=new Array();
+, 'order':function(array){
+    var order=[]
     var i=0;
-    for (i=0; i<(listin.length); i++ ){
-        listout.push(fun(listin[i]));
+    for (i=0;i<array.length;i++){
+      id[i]=i;
     }
-    return listout;
+    return order.sort(function(a,b) {(order.indexOf(a.name) < order.indexOf(b.name) ? -1 : 1);});
   }
 , 'stats':{
     //Round-trip length
@@ -169,7 +167,7 @@ ntp={
   , 'all':function(trips) {
       console.log('delay,offset');
       var _this=this;
-      _this.map(trips, function(trip) {
+      trips.map(function(trip) {
         console.log(_this.delay(trip)+','+_this.offset(trip));
       });
     }
