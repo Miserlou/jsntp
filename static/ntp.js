@@ -143,39 +143,29 @@ ntp={
     clientDate.setTime(clientDate.getTime()-this.offset);
     return clientDate;
   }
-
-, 'sort':function(trips,attr){
-    var list=new Array();
-    var i=0;
-    for (i=0; (trips.length-1); i++ ){
-      list.push(
-    }
-    return trips.sort(function(a,b) {
+/*
+, 'sort':function(list){
+    return list.sort(function(a,b) {
       return a - b;
     });
-}
-
-, 'stats':{
-    'map':function(listin,fun) { 
-      var listout=new Array();
-      var i=0;
-      for (i=0; (listin.length-1); i++ ){
-        var out=fun(listin[i]);
-        if (typeof(out)!='undefined'){
-          listout.push(out);
-        }
-      }
-      return listout;
+  }
+*/
+, 'map':function(listin,fun){
+    var listout=new Array();
+    var i=0;
+    for (i=0; i<(listin.length); i++ ){
+        listout.push(fun(listin[i]));
     }
-
+    return listout;
+  }
+, 'stats':{
     //Round-trip length
-  , 'delay':function(trip) {
+    'delay':function(trip) {
       return (trip.clientReceive-trip.clientSend);
     }
   , 'offset':function(trip){
       return (trip.clientReceive+trip.clientSend)/2-trip.server;
     }
-
   , 'all':function(trips) {
       console.log('delay,offset');
       var _this=this;
