@@ -29,8 +29,7 @@
 */
 
 ntp={
-  'offsets':new Array()
-, 'roundtrips':new Array()
+  'roundtrips':new Array()
 , 'math':{
     /*
        Math for averaging
@@ -105,7 +104,6 @@ ntp={
       clientSend=parseInt(times.split(":")[1]);
       
       lastOffset=(clientReceive+clientSend)/2-server;
-      thisNTP.offsets.push(lastOffset);
 
       thisNTP.roundtrips.push({
         'clientSend':clientSend
@@ -119,7 +117,6 @@ ntp={
         thisNTP.socket.send(new Date().getTime());
       } else {
         //Compute the offset
-        thisNTP.offset=thisNTP.math.mean(thisNTP.offsets.slice(thisNTP.burnin));
         callback();
 /*
         //Send statistics to the server
@@ -145,7 +142,7 @@ ntp={
       tmp.setTime(clientDate);
       clientDate=tmp;
     }
-    clientDate.setTime(clientDate.getTime()-this.offset);
+    clientDate.setTime(clientDate.getTime()-this.offset());
     return clientDate;
   }
 , 'order':function(array){
@@ -154,10 +151,14 @@ ntp={
     for (i=0;i<array.length;i++){
       order[i]=i;
     }
-    return order.sort(function(a,b) {(order.indexOf(a.name) > order.indexOf(b.name) ? -1 : 1);});
+    var arraySorted=array.sort();
+    return order.sort(function(a,b) {(arraySorted.indexOf(a.name) < arraySorted.indexOf(b.name) ? -1 : 1);});
+}
+, 'best':function(){
+    return this.roundtrips[this.order(this.roundtrips.map(this.stats.delay))[0]];
   }
-, 'best':function(trips){
-    return this.roundtrips[this.order(trips.map(this.stats.delay))[0]];
+, 'offset':function(){
+    return this.stats.offset(this.best());
   }
 , 'stats':{
     //Round-trip length
@@ -170,9 +171,10 @@ ntp={
   , 'all':function(trips) {
       console.log('delay,offset');
       var _this=this;
-      trips.map(function(trip) {
-        console.log(_this.delay(trip)+','+_this.offset(trip));
-      });
+      var i=0
+      for (i=0;i<trips.length;i++){
+        console.log(_this.delay(trips[i])+','+_this.offset(trips[i]));
+      }
     }
   }
 
