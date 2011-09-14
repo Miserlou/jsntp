@@ -102,7 +102,7 @@ ntp={
     if (typeof(callback)==='undefined'){
       throw 'No callback to be run after syncing is defined.';
     }
-    this.setup();
+    this.setup(trips);
 
     var thisNTP=this;
     this.socket.on('message', function(times){
