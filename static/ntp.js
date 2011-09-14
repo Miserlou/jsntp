@@ -144,9 +144,10 @@ ntp={
       //Use now if no date is specified
     } else if (typeof(clientDate)==='number'){
       tmp.setTime(clientDate);
-      clientDate=tmp;
+    } else if (typeof(clientDate)==='object'){
+      tmp=clientDate;
     }
-    tmp.setTime(clientDate.getTime()-this.offset());
+    tmp.setTime(tmp.getTime()-this.offset());
     return tmp;
   }
 , 'best':function(){
