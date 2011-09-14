@@ -153,7 +153,11 @@ ntp={
     }
   }
 , 'clientDate':function(serverDate){
-    return this._date(this.offset())(serverDate);
+    if (typeof(serverDate)==='undefined'){
+      return new Date();
+    } else {
+      return this._date(this.offset())(serverDate);
+    }
   }
 , 'serverDate':function(clientDate){
     return this._date(-1*this.offset())(clientDate);
