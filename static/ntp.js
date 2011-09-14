@@ -59,8 +59,21 @@ ntp={
       average = Math.round(average / i);
       return average
     }
+  , 'min':function(list){
+      var min=Infinity;
+      var i=0;
+      for (i=0; i < list.length;i++){
+        if (list[i]<min){
+          min=list[i];
+//          console.log(min);
+        }
+      }
+      return min;
+    }
   , 'sort':function(list){
-      return list.sort(function(a,b) {
+      //Something's very wrong with this.
+      //I think Array.sort modifies state.
+      return (function(){return list})().sort(function(a,b) {
         return a - b;
       });
     }
@@ -138,19 +151,23 @@ ntp={
     return clientDate;
   }
 , 'best':function(){
-    var delays=ntp.roundtrips.map(ntp.stats.delay)
-    var lowDelay=this.math.sort(delays)[0];
+    var delays=this.roundtrips.map(this.stats.delay)
+    var lowDelay=this.math.min(delays);
+//    console.log(delays);
+//    console.log(lowDelay);
     var i=0;
     var bestTrips=[]; //Trips with low delay
     for (i=0;i<delays.length;i++){
       if (delays[i]===lowDelay){
-        bestTrips.push(delays[i]);
+        bestTrips.push(this.roundtrips[i]);
+//        console.log(ntp.stats.delay(bestTrips[bestTrips.length-1])+' should be '+lowDelay);
       }
     }
+//    console.log('Best delay: '+lowDelay);
     return bestTrips;
   }
 , 'offset':function(){
-    return this.math.mean(this.best());
+    return this.math.mean(this.best().map(this.stats.offset));
   }
 , 'stats':{
     //Round-trip length
