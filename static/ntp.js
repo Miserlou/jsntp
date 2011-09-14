@@ -153,10 +153,10 @@ ntp={
     }
   }
 , 'clientDate':function(serverDate){
-    return this._date(serverDate,+this.offset());
+    return this._date(serverDate)(this.offset());
   }
 , 'serverDate':function(clientDate){
-    return this._date(clientDate,-this.offset());
+    return this._date(clientDate)(-1*this.offset());
   }
 , 'best':function(){
     var delays=this.roundtrips.map(this.stats.delay)
