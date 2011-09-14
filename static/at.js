@@ -48,6 +48,9 @@ at = {
       tmp.setTime(time);
       time = tmp;
     }
+    if (typeof(options)==='undefined'){
+      options={};
+    }
     if (typeof(options.precision)==='undefined'){
       //How far away from the exact time is acceptable?
       //Use a number in milliseconds
