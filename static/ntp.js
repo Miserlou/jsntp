@@ -190,12 +190,10 @@ ntp={
       return (trip.clientReceive+trip.clientSend)/2-trip.server;
     }
   , 'all':function(trips) {
-      console.log('delay,offset');
-      var _this=this;
-      var i=0
-      for (i=0;i<trips.length;i++){
-        console.log(_this.delay(trips[i])+','+_this.offset(trips[i]));
-      }
+      //Save delay and offset to csv
+      return ['delay,offset'].concat(trips.map(function(trip){
+        return _this.delay(trip)+','+_this.offset(trip);
+      }).join('\n'){;
     }
   }
 
