@@ -66,7 +66,7 @@ ntp={
     }
   }
 
-, 'setup':function(trips,burnin){
+, 'setup':function(trips){
     /*
        Prepare for syncing
     */
@@ -76,13 +76,7 @@ ntp={
     if (typeof(trips)==='undefined'){
       trips=100;
     }
-    if (typeof(burnin)==='undefined'){
-      burnin=20;
-    }
-
-    //Set trips and burnin
     this.trips=trips;
-    this.burnin=burnin;
 
     this.socket = io.connect();
     this.socket.on('connect', function(){
@@ -91,7 +85,7 @@ ntp={
 
   }
 
-, 'sync':function(callback,trips,burnin,get_client_id){
+, 'sync':function(callback,trips){
     if (typeof(callback)==='undefined'){
       throw 'No callback to be run after syncing is defined.';
     }
@@ -109,14 +103,12 @@ ntp={
         'clientSend':clientSend
       , 'server':server
       , 'clientReceive':clientReceive
-//      , 'clientId':get_client_id()
       });
 
       thisNTP.tripsSoFar++;
       if (thisNTP.tripsSoFar < thisNTP.trips){
         thisNTP.socket.send(new Date().getTime());
       } else {
-        //Compute the offset
         callback();
 /*
         //Send statistics to the server
