@@ -41,20 +41,20 @@ at = {
     }
 
    //User interface for saving the function in the queue
-, 'at':function (func, time, precision, log) {
+, 'at':function (func, time, options) {
     //If a timestamp is given instead of a Date
     if (!time.getSeconds) {
       var tmp = new Date();
       tmp.setTime(time);
       time = tmp;
     }
-    if (typeof(precision)==='undefined'){
+    if (typeof(options.precision)==='undefined'){
       //How far away from the exact time is acceptable?
       //Use a number in milliseconds
-      var precision=this.DEFAULTS.PRECISION;
+      var options.precision=this.DEFAULTS.PRECISION;
     }
-    if (typeof(log)==='undefined'){
-      var log=false;
+    if (typeof(options.log)==='undefined'){
+      var options.log=false;
     }
 
     //Add to the queue
@@ -68,12 +68,14 @@ at = {
     //No daemon
     setTimeout(function(){
       var wrongness=time.getTime()-new Date().getTime());
-      if (wrongness>0) {
-        console.log('Running '+wrongness+' milliseconds early');
-      } else if (wrongness<0) {
-        console.log('Running '+(-1*wrongness)+' milliseconds late');
-      } else {
-        console.log('Running perfectly on time');
+      if (options.log){
+        if (wrongness>0) {
+          console.log('Running '+wrongness+' milliseconds early');
+        } else if (wrongness<0) {
+          console.log('Running '+(-1*wrongness)+' milliseconds late');
+        } else {
+          console.log('Running perfectly on time');
+        }
       }
       func();
     },time.getTime()-new Date().getTime());
