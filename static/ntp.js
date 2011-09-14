@@ -134,7 +134,7 @@ ntp={
     this.socket.send(new Date().getTime());
   }
 
-, '_date':function(dateIn,adjust){
+, '_date':function(adjust){
     return function(dateIn){
       /*
          Get the date of the server that
@@ -153,10 +153,10 @@ ntp={
     }
   }
 , 'clientDate':function(serverDate){
-    return this._date(serverDate)(this.offset());
+    return this._date(this.offset())(serverDate);
   }
 , 'serverDate':function(clientDate){
-    return this._date(clientDate)(-1*this.offset());
+    return this._date(-1*this.offset())(clientDate);
   }
 , 'best':function(){
     var delays=this.roundtrips.map(this.stats.delay)
