@@ -147,7 +147,7 @@ ntp={
   }
 , 'best':function(){
     var delays=ntp.roundtrips.map(ntp.stats.delay)
-    var lowDelay=delays.sort()[0];
+    var lowDelay=delays.sort(this.math.sort)[0];
     var i=0;
     var bestTrips=[]; //Trips with low delay
     for (i=0;i<delays.length;i++){
