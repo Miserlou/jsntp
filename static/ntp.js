@@ -191,9 +191,10 @@ ntp={
     }
   , 'all':function(trips) {
       //Save delay and offset to csv
+      var _this=this;
       return ['delay,offset'].concat(trips.map(function(trip){
         return _this.delay(trip)+','+_this.offset(trip);
-      }).join('\n'){;
+      }).join('\n'));
     }
   }
 
