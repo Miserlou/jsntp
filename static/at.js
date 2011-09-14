@@ -67,7 +67,7 @@ at = {
     */
     //No daemon
     setTimeout(function(){
-      var wrongness=time.getTime()-new Date().getTime());
+      var wrongness=time.getTime()-new Date().getTime();
       if (options.log){
         if (wrongness>0) {
           console.log('Running '+wrongness+' milliseconds early');
