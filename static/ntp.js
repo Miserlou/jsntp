@@ -139,11 +139,10 @@ ntp={
        Get the date of the server that
        corresponds to a client date.
     */
+    tmp=new Date();
     if (typeof(clientDate)==='undefined'){
       //Use now if no date is specified
-      clientDate=new Date();
     } else if (typeof(clientDate)==='number'){
-      tmp=new Date();
       tmp.setTime(clientDate);
       clientDate=tmp;
     }
