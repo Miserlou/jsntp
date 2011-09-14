@@ -56,8 +56,8 @@ at = {
       //Use a number in milliseconds
       options.precision=this.DEFAULTS.PRECISION;
     }
-    if (typeof(options.log)==='undefined'){
-      options.log=false;
+    if (typeof(options.log)==='true'){
+      options.log=console.log;
     }
 
     //Add to the queue
@@ -70,17 +70,17 @@ at = {
     */
     //No daemon
     setTimeout(function(){
+      func();
       var wrongness=time.getTime()-new Date().getTime();
-      if (options.log){
+      if (typeof(options.log)==='function'){
         if (wrongness>0) {
-          console.log('Running '+wrongness+' milliseconds early');
+          options.log('Running '+wrongness+' milliseconds early');
         } else if (wrongness<0) {
-          console.log('Running '+(-1*wrongness)+' milliseconds late');
+          options.log('Running '+(-1*wrongness)+' milliseconds late');
         } else {
-          console.log('Running perfectly on time');
+          options.log('Running perfectly on time');
         }
       }
-      func();
     },time.getTime()-new Date().getTime());
   }
 
