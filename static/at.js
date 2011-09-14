@@ -56,9 +56,6 @@ at = {
       //Use a number in milliseconds
       options.precision=this.DEFAULTS.PRECISION;
     }
-    if (typeof(options.log)==='true'){
-      options.log=console.log;
-    }
 
     //Add to the queue
     /* Daemon
@@ -73,13 +70,7 @@ at = {
       func();
       var wrongness=time.getTime()-new Date().getTime();
       if (typeof(options.log)==='function'){
-        if (wrongness>0) {
-          options.log('Running '+wrongness+' milliseconds early');
-        } else if (wrongness<0) {
-          options.log('Running '+(-1*wrongness)+' milliseconds late');
-        } else {
-          options.log('Running perfectly on time');
-        }
+        options.log(wrongness);
       }
     },time.getTime()-new Date().getTime());
   }
