@@ -145,7 +145,7 @@ ntp={
     } else if (typeof(clientDate)==='number'){
       tmp.setTime(clientDate);
     } else if (typeof(clientDate)==='object'){
-      tmp=clientDate;
+      tmp.setTime(clientDate.getTime());
     }
     tmp.setTime(tmp.getTime()-this.offset());
     return tmp;
