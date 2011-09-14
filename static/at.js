@@ -55,11 +55,15 @@ at = {
     }
 
     //Add to the queue
+    /* Daemon
     var p=0-Math.abs(precision);
     var p_end=Math.abs(precision);
     for (p;p<=precision;p++){
       this._set(func,time,p);
     }
+    */
+    //No daemon
+    setTimeout(func,time.getTime()-new Date().getTime());
   }
 
 , 'atd': function(thisAT) { //Daemon
@@ -82,4 +86,4 @@ at = {
     },1);
   }
 }
-at.atd();
+//at.atd();
