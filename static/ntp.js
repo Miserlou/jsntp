@@ -145,17 +145,16 @@ ntp={
     clientDate.setTime(clientDate.getTime()-this.offset());
     return clientDate;
   }
-, 'order':function(array){
-    var order=[]
-    var i=0;
-    for (i=0;i<array.length;i++){
-      order[i]=i;
-    }
-    var arraySorted=array.sort();
-    return order.sort(function(a,b) {(arraySorted.indexOf(a.name) < arraySorted.indexOf(b.name) ? -1 : 1);});
-}
 , 'best':function(){
-    return this.roundtrips[this.order(this.roundtrips.map(this.stats.delay))[0]];
+    var delays=ntp.roundtrips.map(ntp.stats.delay)
+    var lowDelay=delays.sort()[0];
+    var i=0;
+    var bestTrips=[]; //Trips with low delay
+    for (i=0;i<delays.length;i++){
+      if (delays[i]===lowDelay){
+        bestTrips.push(delays[i]);
+      }
+    }
   }
 , 'offset':function(){
     return this.stats.offset(this.best());
