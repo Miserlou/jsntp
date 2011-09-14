@@ -155,9 +155,10 @@ ntp={
         bestTrips.push(delays[i]);
       }
     }
+    return bestTrips;
   }
 , 'offset':function(){
-    return this.stats.offset(this.best());
+    return this.math.mean(this.best());
   }
 , 'stats':{
     //Round-trip length
