@@ -134,21 +134,29 @@ ntp={
     this.socket.send(new Date().getTime());
   }
 
-, 'date':function(clientDate){
-    /*
-       Get the date of the server that
-       corresponds to a client date.
-    */
-    tmp=new Date();
-    if (typeof(clientDate)==='undefined'){
-      //Use now if no date is specified
-    } else if (typeof(clientDate)==='number'){
-      tmp.setTime(clientDate);
-    } else if (typeof(clientDate)==='object'){
-      tmp.setTime(clientDate.getTime());
+, '_date':function(dateIn,adjust){
+    return function(dateIn){
+      /*
+         Get the date of the server that
+         corresponds to a client date.
+      */
+      tmp=new Date();
+      if (typeof(dateIn)==='undefined'){
+        //Use now if no date is specified
+      } else if (typeof(dateIn)==='number'){
+        tmp.setTime(dateIn);
+      } else if (typeof(dateIn)==='object'){
+        tmp.setTime(dateIn.getTime());
+      }
+      tmp.setTime(tmp.getTime()+adjust);
+      return tmp;
     }
-    tmp.setTime(tmp.getTime()-this.offset());
-    return tmp;
+  }
+, 'clientDate':function(serverDate){
+    return this._date(serverDate,+this.offset());
+  }
+, 'serverDate':function(clientDate){
+    return this._date(clientDate,-this.offset());
   }
 , 'best':function(){
     var delays=this.roundtrips.map(this.stats.delay)
