@@ -147,8 +147,8 @@ ntp={
       tmp.setTime(clientDate);
       clientDate=tmp;
     }
-    clientDate.setTime(clientDate.getTime()-this.offset());
-    return clientDate;
+    tmp.setTime(clientDate.getTime()-this.offset());
+    return tmp;
   }
 , 'best':function(){
     var delays=this.roundtrips.map(this.stats.delay)
