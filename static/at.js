@@ -51,10 +51,10 @@ at = {
     if (typeof(options.precision)==='undefined'){
       //How far away from the exact time is acceptable?
       //Use a number in milliseconds
-      var options.precision=this.DEFAULTS.PRECISION;
+      options.precision=this.DEFAULTS.PRECISION;
     }
     if (typeof(options.log)==='undefined'){
-      var options.log=false;
+      options.log=false;
     }
 
     //Add to the queue
