@@ -41,7 +41,7 @@ at = {
     }
 
    //User interface for saving the function in the queue
-, 'at':function (func, time, precision) {
+, 'at':function (func, time, precision, log) {
     //If a timestamp is given instead of a Date
     if (!time.getSeconds) {
       var tmp = new Date();
@@ -53,6 +53,9 @@ at = {
       //Use a number in milliseconds
       var precision=this.DEFAULTS.PRECISION;
     }
+    if (typeof(log)==='undefined'){
+      var log=false;
+    }
 
     //Add to the queue
     /* Daemon
@@ -63,7 +66,17 @@ at = {
     }
     */
     //No daemon
-    setTimeout(func,time.getTime()-new Date().getTime());
+    setTimeout(function(){
+      var wrongness=time.getTime()-new Date().getTime());
+      if (wrongness>0) {
+        console.log('Running '+wrongness+' milliseconds early');
+      } else if (wrongness<0) {
+        console.log('Running '+(-1*wrongness)+' milliseconds late');
+      } else {
+        console.log('Running perfectly on time');
+      }
+      func();
+    },time.getTime()-new Date().getTime());
   }
 
 , 'atd': function(thisAT) { //Daemon
